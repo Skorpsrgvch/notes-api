@@ -34,6 +34,8 @@ func main() {
 		}
 
 		switch r.Method {
+		case http.MethodGet:
+			handlers.GetNoteHandler(store)(w, r)
 		case http.MethodPut:
 			handlers.UpdateNoteHandler(store)(w, r)
 		case http.MethodDelete:

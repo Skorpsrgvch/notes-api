@@ -56,6 +56,37 @@ func CreateNoteHandler(storage *storage.Storage) http.HandlerFunc {
 	}
 }
 
+func GetNoteHandler(s *storage.Storage) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		if r.Method != http.MethodGet {
+			http.Error(w, "Метод не разрешён", http.StatusMethodNotAllowed)
+			return
+		}
+
+		idStr := r.URL.Path[len("/notes/"):]
+		id, err := strconv.Atoi(idStr)
+		if err != nil {
+			http.Error(w, "Неверный ID", http.StatusBadRequest)
+			return
+		}
+
+		note, err := s.GetNoteByID(id)
+		if err != nil {
+			log.Printf("Ошибка при получении заметки %d: %v", id, err)
+			http.Error(w, "Внутренняя ошибка", http.StatusInternalServerError)
+			return
+		}
+
+		if note == nil {
+			http.Error(w, "Заметка не найдена", http.StatusNotFound)
+			return
+		}
+
+		w.Header().Set("Content-Type", "application/json")
+		json.NewEncoder(w).Encode(note)
+	}
+}
+
 func GetAllNotesHandler(s *storage.Storage) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		if r.Method != http.MethodGet {

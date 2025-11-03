@@ -41,6 +41,19 @@ func (storage *Storage) CreateNote(title, content string) (int64, error) {
 	return result.LastInsertId()
 }
 
+func (s *Storage) GetNoteByID(id int) (*models.Note, error) {
+	row := s.db.QueryRow("SELECT id, title, content FROM notes WHERE id = ?", id)
+	var note models.Note
+	err := row.Scan(&note.Id, &note.Title, &note.Content)
+	if err != nil {
+		if err == sql.ErrNoRows {
+			return nil, nil // Заметка не найдена — вернём nil без ошибки
+		}
+		return nil, err
+	}
+	return &note, nil
+}
+
 func (storage *Storage) GetAllNotes() ([]models.Note, error) {
 	rows, err := storage.db.Query("SELECT id, title, content FROM notes")
 	if err != nil {
