@@ -16,15 +16,19 @@ HTTP: net/http (стандартная библиотека)
 POST
 /notes
 Создать новую заметку
+
 GET
 /notes
 Получить список всех заметок
+
 GET
 /notes/{id}
 Получить заметку по ID
+
 PUT
 /notes/{id}
 Обновить заметку
+
 DELETE
 /notes/{id}
 Удалить заметку
@@ -33,6 +37,7 @@ DELETE
 Создание заметки
 
  POST http://localhost:8080/notes 
+ 
   -H "Content-Type: application/json" 
   {"title":"Моя заметка","content":"Текст заметки"}
 
@@ -47,6 +52,7 @@ GET http://localhost:8080/notes/1
 Обновление заметки
 
 PUT http://localhost:8080/notes/1
+
   -H "Content-Type: application/json" 
   {"title":"Обновлённая заметка","content":"Новый текст"}
 
