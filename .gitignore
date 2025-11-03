@@ -1,0 +1,12 @@
+# Бинарные файлы Go
+notes-api
+*.exe
+
+# База данных (не коммитим!)
+notes.db
+
+# Кэш и редакторы
+.DS_Store
+.vscode/
+*.swp
+*.swo
