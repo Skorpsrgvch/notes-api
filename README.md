@@ -45,14 +45,17 @@ DELETE
 Получение всех заметок
 
 GET http://localhost:8080/notes
+
 Получение одной заметки
 
 GET http://localhost:8080/notes/1
+
 Обновление заметки
 
 PUT http://localhost:8080/notes/1
   -H "Content-Type: application/json" 
   {"title":"Обновлённая заметка","content":"Новый текст"}
+
 Удаление заметки
  DELETE http://localhost:8080/notes/1
  
